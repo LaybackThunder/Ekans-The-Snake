@@ -18,7 +18,7 @@ class Client():
         pygame.display.set_caption("Ooooooh!") # Headline on top of window's boarders
 
         # Object button Instatiate
-        self.o_button = pygwidgets.TextButton(self.window, self.settings.center_button, 'Click to quit')
+        self.o_button = pygwidgets.TextButton(self.window, self.settings.center_button, 'Click to quit', callBack=self.quit_game)
 
     def run_game(self):
         """The game begins."""
@@ -28,12 +28,10 @@ class Client():
                 if event.type == pygame.QUIT:
                     self.quit_game()
 
-                if self.o_button.handleEvent(event):
-                    print('OOOOOOOOOOOOOOH!')
-                    self.quit_game()
+                self.o_button.handleEvent(event)
+                    # Quit game when button is clicked
 
             # Draw 
-
             # draw button
             self.o_button.draw()
 
