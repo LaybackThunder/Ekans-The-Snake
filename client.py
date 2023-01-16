@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, pygwidgets
 from settings import *
 
 class Client():
@@ -7,12 +7,18 @@ class Client():
     def __init__(self):
         """Initialize states."""
 
+        # Initialize all pygame modules
+        pygame.init()
+
         # Objects instanciate
         self.settings = Settings()
-
+        
         # Window comes to life
         self.window = pygame.display.set_mode(self.settings.WINDOW_DIMENTIONS)
         pygame.display.set_caption("Ooooooh!") # Headline on top of window's boarders
+
+        # Object button Instatiate
+        self.o_button = pygwidgets.TextButton(self.window, self.settings.center_button, 'Click to quit')
 
     def run_game(self):
         """The game begins."""
@@ -21,12 +27,17 @@ class Client():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.quit_game()
-                
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_q:
-                        self.quit_game()
-                        
+
+                if self.o_button.handleEvent(event):
+                    print('OOOOOOOOOOOOOOH!')
+                    self.quit_game()
+
             # Draw 
+
+            # draw button
+            self.o_button.draw()
+
+            # Update every surface by the frame
             pygame.display.update()
         
     def quit_game(self):
