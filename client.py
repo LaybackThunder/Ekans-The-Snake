@@ -35,7 +35,7 @@ class Client():
                     self.quit_game()
 
                 self.o_button.handleEvent(event)
-                    # change background color when button is clicked
+                    # change background & text color when button is clicked
 
             # Draw
             # Draw background
