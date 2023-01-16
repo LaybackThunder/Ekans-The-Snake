@@ -18,7 +18,7 @@ class Client():
         pygame.display.set_caption("Ooooooh!") # Headline on top of window's boarders
 
         # Object button Instatiate
-        self.o_button = pygwidgets.TextButton(self.window, self.settings.center_button, 'Click to quit', callBack=self.quit_game)
+        self.o_button = pygwidgets.TextButton(self.window, self.settings.center_button, 'Click to change color', callBack=self.color_switch)
 
     def run_game(self):
         """The game begins."""
@@ -29,19 +29,35 @@ class Client():
                     self.quit_game()
 
                 self.o_button.handleEvent(event)
-                    # Quit game when button is clicked
+                    # change background color when button is clicked
+                    #self.color_switch()
 
-            # Draw 
+            # Draw
+            # Draw background
+            self.window.fill(self.settings.bacckground_color)
+
             # draw button
             self.o_button.draw()
 
             # Update every surface by the frame
             pygame.display.update()
         
-    def quit_game(self):
+    def quit_game(self, callBack=None):
         """Quit game and window."""
         pygame.quit()
         sys.exit()
+
+    def color_switch(self, callBack=None):
+        """When called it switches between two colors."""
+        if  not self.settings.is_BLACK:
+            self.settings.bacckground_color = self.settings.BLACK
+            self.settings.is_BLACK = True
+            
+        elif self.settings.is_BLACK:
+            self.settings.bacckground_color = self.settings.OCEAN_GREEN
+            self.settings.is_BLACK = False
+                
+
 
 if __name__ == "__main__":
     c = Client()
