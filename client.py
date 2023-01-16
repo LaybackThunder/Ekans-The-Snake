@@ -4,11 +4,14 @@ from settings import *
 class Client():
     """Manage game states and behavior."""
 
-    def __init__(self):
+    def __init__(self, callBack=None):
         """Initialize states."""
 
         # Initialize all pygame modules
         pygame.init()
+
+        # Call back
+        self.callBack = callBack
 
         # Objects instanciate
         self.settings = Settings()
@@ -18,7 +21,10 @@ class Client():
         pygame.display.set_caption("Ooooooh!") # Headline on top of window's boarders
 
         # Object button Instatiate
-        self.o_button = pygwidgets.TextButton(self.window, self.settings.center_button, 'Click to change color', callBack=self.color_switch)
+        self.o_button = pygwidgets.TextCheckBox(
+            self.window, self.settings.center_button, 
+            'Click to change color', textColor=self.settings.OCEAN_GREEN,
+            callBack=self.color_switch)
 
     def run_game(self):
         """The game begins."""
@@ -30,11 +36,10 @@ class Client():
 
                 self.o_button.handleEvent(event)
                     # change background color when button is clicked
-                    #self.color_switch()
 
             # Draw
             # Draw background
-            self.window.fill(self.settings.bacckground_color)
+            self.window.fill(self.settings.bg_color)
 
             # draw button
             self.o_button.draw()
@@ -49,14 +54,26 @@ class Client():
 
     def color_switch(self, callBack=None):
         """When called it switches between two colors."""
+        # Change bg_color to BLACK if bg_color is BLACK
         if  not self.settings.is_BLACK:
-            self.settings.bacckground_color = self.settings.BLACK
+            self.settings.bg_color = self.settings.BLACK
             self.settings.is_BLACK = True
-            
+            # Change text color from BLACK to OCEAN_GREEN
+            self.o_button = pygwidgets.TextCheckBox(
+                self.window, self.settings.center_button, 
+                'Click to change color', textColor=self.settings.OCEAN_GREEN,
+                callBack=self.color_switch)
+
+        # Change bg_color to OCEAN_GREEN if bg_color is BLACK
         elif self.settings.is_BLACK:
-            self.settings.bacckground_color = self.settings.OCEAN_GREEN
+            self.settings.bg_color = self.settings.OCEAN_GREEN
             self.settings.is_BLACK = False
-                
+            # Change text color from OCEAN_GREEN to BLACK
+            self.o_button = pygwidgets.TextCheckBox(
+                self.window, self.settings.center_button, 
+                'Click to change color', textColor=self.settings.BLACK,
+                callBack=self.color_switch)
+ 
 
 
 if __name__ == "__main__":
